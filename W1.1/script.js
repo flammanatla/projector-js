@@ -7,12 +7,12 @@ let initialsArray;
 
 initialsArray = userFullNames.map(
     (userFullName) => userFullName.split(' ').map( // Create array where each element is a partial name
-        (userPartialName) => userPartialName[0][0] // Select only 1st letter of each partial name
+        (userPartialName) => userPartialName[0] // Select only 1st letter of each partial name
     )
 );
 
 initials = initialsArray.map(
-    (initial) => initial.join('.') //convert array into string with initials
+    (initial) => initial.join('.') + '.' //convert array into string with initials
 )
 
 initials.sort((a, b) => {
@@ -32,6 +32,9 @@ console.log(initials); // [ "Г.П.А", "П.О.І", "Р.А.О"]
 ////Reverse the number
 const currentMaxValue = 4589;
 let reversedMaxValue;
+let reversedArray;
+
+/* 
 let acc = currentMaxValue;
 let numberArray = [];
 
@@ -41,9 +44,12 @@ while (acc >= 10) {
 }
 numberArray.push(acc);           // do not forget about the last piece of the number
 
-console.log(`numberArray ${numberArray}`);
-
 reversedMaxValue = Number(numberArray.join(''));
+*/
+
+reversedArray = String(currentMaxValue).split('').reverse();
+
+reversedMaxValue = Number(reversedArray.join(''));
 
 console.log(reversedMaxValue); // 9854
 console.log(typeof reversedMaxValue); // 'number'
@@ -59,11 +65,16 @@ let productOfArray;
 let flatArray = resultsArray.flat(Infinity);
 console.log(flatArray);
 
-let i = 0;
-productOfArray = 1;
-while (i <= resultsArray.length) {
-    productOfArray *= flatArray[i];
-    i++;
-}
+// let i = 0;
+// productOfArray = 1;
+// while (i <= resultsArray.length) {
+//     productOfArray *= flatArray[i];
+//     i++;
+// }
 
-console.log(productOfArray); // 24
+productOfArray = flatArray.reduce(
+    (product, currentValue) => product * currentValue,
+    1
+);
+
+console.log(`productOfArray ---> ${productOfArray}`); // 24
