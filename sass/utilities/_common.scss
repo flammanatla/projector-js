@@ -15,7 +15,7 @@ main {
 }
 
 .container {
-  padding: 100px 20%;
+  padding: 70px 20%;
 
   @include for-medium-down {
     padding: 20px;
@@ -29,7 +29,7 @@ h1 {
 }
 
 h2 {
-  margin: 100px 0 30px;
+  margin: 70px 0 30px;
 }
 
 .date-picker {
