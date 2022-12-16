@@ -53,8 +53,9 @@ h2 {
     input {
       display: block;
       margin: 10px 10px 10px 0;
-      height: 36px;
+      height: 38px;
       font-size: 22px;
+      width: 193px;
     }
 
     @include for-xs-down {
@@ -118,15 +119,16 @@ tr:nth-child(even) {
 .btn {
   border: none;
   padding: 10px 20px;
-  background-color: #333;
+  background-color: #d9d9d9;
   text-transform: uppercase;
-  color: #cecece;
+  color: #333;
   font-size: 18px;
 }
 
-.error {
-  color: #ff0000;
-  height: 26px;
+.btn:disabled {
+  color: #0b0b0b;
+  background-color: #333;
+  /*background-color: #525252;*/
 }
 
 .result {

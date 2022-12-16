@@ -20,7 +20,7 @@
                     <div>
                         <label for="start">Select starting date:</label>
 
-                        <input type="date" id="start" name="date-start" min="1000-01-01" max="3000-12-31">
+                        <input type="date" id="start" name="date-start">
                     </div>
                 </div>
 
@@ -28,19 +28,17 @@
                     <div>
                         <label for="end">Select ending date:</label>
 
-                        <input type="date" id="finish" name="date-finish" min="1000-01-01" max="3000-12-31">
+                        <input type="date" id="finish" name="date-finish">
                     </div>
                     <div>
                         <div class="preset">
                             Or select a time preset:
                         </div>
-                        <button class="btn" onclick="updateEndDate('week')">Week</button>
-                        <button class="btn" onclick="updateEndDate('month')">Month</button>
+                        <button class="btn btn--week" onclick="updateEndDate('week')" disabled>Week</button>
+                        <button class="btn btn--month" onclick="updateEndDate('month')" disabled>Month</button>
                     </div>
                 </div>
             </div>
-            <div class="error"></div>
-
             <fieldset class="options" id="options-days">
                 <legend>Select days to include:</legend>
 

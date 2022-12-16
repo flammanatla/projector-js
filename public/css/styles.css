@@ -52,8 +52,9 @@ h2 {
     .date-picker__start input, .date-picker__end input {
       display: block;
       margin: 10px 10px 10px 0;
-      height: 36px;
-      font-size: 22px; }
+      height: 38px;
+      font-size: 22px;
+      width: 193px; }
     @media (max-width: 576px) {
       .date-picker__start, .date-picker__end {
         width: 100%; } }
@@ -102,14 +103,15 @@ tr:nth-child(even) {
 .btn {
   border: none;
   padding: 10px 20px;
-  background-color: #333;
+  background-color: #d9d9d9;
   text-transform: uppercase;
-  color: #cecece;
+  color: #333;
   font-size: 18px; }
 
-.error {
-  color: #ff0000;
-  height: 26px; }
+.btn:disabled {
+  color: #0b0b0b;
+  background-color: #333;
+  /*background-color: #525252;*/ }
 
 .result {
   height: 60px;

@@ -2,6 +2,9 @@
 
 const startInput = document.querySelector('#start');
 const endInput = document.querySelector('#finish');
+const presetWeek = document.querySelector('.btn--week');
+const presetMnth = document.querySelector('.btn--month');
+const inputs = document.querySelectorAll('[type="date"]');
 const calculateBtn = document.querySelector('.btn--calculate');
 const optionsDays = document.querySelector('#options-days');
 const optionsUnits = document.querySelector('#options-units');
@@ -9,6 +12,28 @@ const resultsList = document.querySelector('.history');
 
 document.addEventListener('DOMContentLoaded', loadHistory);
 calculateBtn.addEventListener('click', displayResult);
+
+//block out dates in date pickers when one of the dates already selected
+startInput.addEventListener('change', function () {
+  presetWeek.disabled = false;
+  presetMnth.disabled = false;
+  endInput.setAttribute('min', startInput.value);
+});
+
+endInput.addEventListener('change', function () {
+  startInput.setAttribute('max', endInput.value);
+});
+
+// disable Calculate button untill all inputs are filled
+calculateBtn.disabled = true;
+
+for (let i = 0; i < inputs.length; i++) {
+  inputs[i].addEventListener('input', () => {
+    let values = [];
+    inputs.forEach(v => values.push(v.value));
+    calculateBtn.disabled = values.includes('');
+  });
+}
 
 function displayResult() {
   const startDate = new Date(startInput.value);
@@ -26,6 +51,10 @@ function displayResult() {
 
   resultHTML.innerHTML = `Between ${startInput.value} and ${endInput.value} there are ${difference} ${units} (${daysIncluded})`;
 
+  if (resultsList.childElementCount > 9) {
+    resultsList.removeChild(resultsList.firstElementChild);
+  }
+
   addNewRow(startInput.value, endInput.value, daysIncluded, units, difference);
 
   storeResultInLocalStorage(
@@ -36,15 +65,6 @@ function displayResult() {
     difference
   );
 }
-
-endInput.addEventListener('change', function () {
-  if (startInput.value > endInput.value) {
-    document.querySelector('.error').innerHTML =
-      'End date need to be bigger then start date';
-  } else {
-    document.querySelector('.error').innerHTML = '';
-  }
-});
 
 function calculateDifference(
   includedDays = 'every day',
@@ -63,7 +83,6 @@ function calculateDifference(
     timeDifference = calculateInSelectedUnits(specificDays, units);
   }
 
-  //console.log(`time diff in ${units}:`, timeDifference);
   return timeDifference;
 }
 
@@ -85,7 +104,6 @@ function calculateSpecificDays(start, time, daysToInclude) {
   for (let i = 0; i < time; i++) {
     start.setDate(start.getDate() + 1);
     let currentDayOfTheWeek = start.getDay();
-    console.log(`current day of the week`, currentDayOfTheWeek);
     if (currentDayOfTheWeek > 0 && currentDayOfTheWeek < 6) {
       week[0]++;
     } else {
@@ -148,8 +166,10 @@ function storeResultInLocalStorage(start, end, daysIncluded, units, result) {
     history = [];
   }
 
+  if (history.length > 9) {
+    history.shift();
+  }
   history.push({ start, end, daysIncluded, units, result });
-  console.log(history);
   localStorage.setItem('history', JSON.stringify(history));
 }
 
@@ -162,7 +182,7 @@ function loadHistory() {
     history = [];
   }
 
-  console.log('loading history...');
+  //console.log('loading history...');
 
   history.forEach(element => {
     addNewRow(
