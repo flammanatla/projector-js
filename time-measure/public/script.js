@@ -156,6 +156,10 @@ function updateEndDate(preset) {
       .padStart(2, '0') +
     '-' +
     Number(endDate.getDate()).toString().padStart(2, '0');
+
+  // create input event to trigger eventListener on endInput date picker
+  const changeEvent = new Event('input');
+  endInput.dispatchEvent(changeEvent);
 }
 
 function storeResultInLocalStorage(start, end, daysIncluded, units, result) {
