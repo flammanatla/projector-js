@@ -10,7 +10,7 @@
 5) у всіх чотирьох класів має бути один (крім проміжних) клас-предок
 */
 
-class Creature {
+class Being {
   constructor(name, race, type) {
     this.name = name;
     this.race = race;
@@ -22,7 +22,7 @@ class Creature {
     );
 }
 
-class Monster extends Creature {
+class Monster extends Being {
   #loot;
   constructor(name, race, type, className, immune, sensitive, loot) {
     super(name, race, type);
@@ -34,6 +34,12 @@ class Monster extends Creature {
   immunity = () => console.log(`${this.name} is resistant to ${this.immune}`);
   sensitivity = () =>
     console.log(`${this.name} is vulnerable to: ${this.sensitive}`);
+  reward = () =>
+    console.log(
+      `When ${this.name} is killed, player will be able to collect ${
+        this.#loot
+      }`
+    );
 }
 
 class CursedOne extends Monster {
@@ -61,32 +67,33 @@ const ghoul = new Necrophage(
   'Monster',
   'NPC',
   'Necrophage',
-  'poison',
-  'necrophage oil',
-  'blood',
-  'battlefields and cemeteries, places where dead bodies lay'
+  'Poison',
+  'Necrophage oil',
+  'Ghoul blood',
+  'Battlefields and cemeteries, places where dead bodies lay'
 );
 ghoul.whoAreYou();
 ghoul.immunity();
 ghoul.sensitivity();
 ghoul.appearance();
+ghoul.reward();
 
 const werewolve = new CursedOne(
   'Werewolve',
   'Monster',
   'NPC',
   'Cursed One',
-  'steel',
-  'cursed oil, silver sword',
-  'skin',
-  'confident of their resistance to conventional weapons'
+  'Steel',
+  'Cursed oil, Silver sword',
+  'Wolf skin',
+  'Confident of their resistance to conventional weapons'
 );
 werewolve.origin();
 werewolve.sensitivity();
-console.log(werewolve.loot);
+werewolve.reward();
 console.log(werewolve.tactics);
 
-class Character extends Creature {
+class Character extends Being {
   #birthYear;
   constructor(name, race, type, birthYear, profession, gender, children) {
     super(name, race, type);
@@ -95,8 +102,15 @@ class Character extends Creature {
     this.gender = gender;
     this.children = children;
   }
-  hasChildren = () =>
-    console.log(`${this.name} has ${this.children.length} children`);
+  hasChildren = () => {
+    let childrenValue = 'no children';
+    if (this.children.length > 1) {
+      childrenValue = `${this.children.length} children`;
+    } else if (this.children.length === 1) {
+      childrenValue = `${this.children.length} child`;
+    }
+    console.log(`${this.name} has ${childrenValue}`);
+  };
 }
 
 class Witcher extends Character {
